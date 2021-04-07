@@ -1,0 +1,94 @@
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+
+
+		////
+
+
+		package com.example.NetGroup.model;
+
+
+        import javax.persistence.*;
+        import java.io.Serializable;
+        import java.time.LocalDateTime;
+
+        @Table(name = "users")
+        @DiscriminatorValue("users")
+        @Entity
+        public class Users implements Serializable {
+            @Id
+            @GeneratedValue(strategy = GenerationType.AUTO)
+            @Column(nullable = false, updatable = false)
+            private Long id;
+            @Column(name = "name", nullable = false, unique = true)
+            private String username;
+            @Column(name = "createdAt", nullable = false)
+            private LocalDateTime createdAt;
+            @Column(name = "password", nullable = false)
+            private String password;
+            @Column(name = "admin")
+            private boolean admin;
+
+            public Users() {
+            }
+            //Constructor
+
+            public Users(
+                    String username,
+                    String password
+            ) {
+
+                this.username = username;
+                this.password = password;
+
+            }
+
+
+            public String getName() {
+                return username;
+            }
+
+            public void setName() {
+                this.username = username;
+            }
+
+
+            public LocalDateTime getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(LocalDateTime createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String encode) {
+                this.password = password;
+            }
+
+            public boolean getAdmin() {
+                return admin;
+            }
+
+            public void setAdmin() {
+                this.admin = false;
+            }
+
+            @Override
+            public String toString() {
+                return "Users{ " +
+                        "id=" + id +
+                        ", name " + username + '\'' +
+                        ", password " + password + '\'' +
+                        ", created_at " + createdAt + '\'' +
+                        ", admin" + admin + '\'' +
+                        "}";
+            }
+
+
+        }

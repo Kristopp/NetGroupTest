@@ -1,0 +1,20 @@
+[
+    {
+        "name": "KristoPP",
+        "email": "spacecakesupreme5@gmail.com",
+        "password": "kammal",
+        "admin": true
+    },
+    {
+        "name": "Boobies",
+        "email": "boobies69@email.com",
+        "password": "sammal",
+        "admin": false
+    },
+    {
+        "name": "Tarmo",
+        "email": "tarmoparmo@email.com",
+        "password": "kammal",
+        "admin": false
+    }
+]
