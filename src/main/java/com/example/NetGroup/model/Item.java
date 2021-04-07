@@ -3,7 +3,6 @@ package com.example.NetGroup.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 
@@ -24,6 +23,8 @@ public class Item implements Serializable {
     LocalDateTime whenStored;
     @Column(name = "location")
     String location;
+    @Column(name = "locationCategory")
+    Long locationCategory;
     @Column(name = "quantity")
     Integer quantity;
     @Column(name = "description")
@@ -38,6 +39,7 @@ public class Item implements Serializable {
             String name,
             Long serial,
             String location,
+            Long locationCategory,
             Integer quantity,
             String description
     ) {
@@ -45,6 +47,7 @@ public class Item implements Serializable {
         this.serial = serial;
         this.img_url = img_url;
         this.location = location;
+        this.locationCategory = locationCategory;
         this.quantity = quantity;
         this.description = description;
     }
@@ -99,6 +102,15 @@ public class Item implements Serializable {
 
     public String getLocation() {
         return location;
+    }
+
+
+    public void setLocationCategory() {
+        this.locationCategory = locationCategory;
+    }
+
+    public Long getLocationCategory() {
+        return locationCategory;
     }
 
     public void setQuantity() {

@@ -1,8 +1,11 @@
 export const initalState = {
   inventory: [],
   user: null,
-  newItem: {
+  locationAadress: {},
+  newItemState: {
     name: "",
+    location: "",
+    location_category: 0,
     serial: 0,
     quantity: 0,
     description: "",
@@ -14,12 +17,16 @@ export const initalState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "CREATE_INVENTORY":
-      console.log(action.item);
       return {
         ...state,
         inventory: [...state.inventory, action.item],
       };
-
+      case "GET_INVENTORY_LOCATION":
+        console.log(action.item)
+        return {
+          ...state,
+          locationAadress: action.item
+        };
     case "CREATE_NEW_ITEM":
       console.log(action.item);
       return {
@@ -30,6 +37,5 @@ const reducer = (state, action) => {
       return state;
   }
 };
-console.log(initalState.user);
 
 export default reducer;

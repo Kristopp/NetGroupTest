@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class ItemTest {
     @Test
     public void testConstructor() {
-        Item actualItem = new Item( "https://example.org/example", "Name", 12334123L,"Location", 1,
+        Item actualItem = new Item( "https://example.org/example", "Name", 12334123L,"Location", 1l, 1,
                 "The characteristics of someone or something");
         assertEquals(1, actualItem.quantity.intValue());
         assertEquals("Location", actualItem.location);

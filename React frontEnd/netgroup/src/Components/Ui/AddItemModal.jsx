@@ -1,10 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useStateValue } from "../../state/StateProvider";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 const AddItemModal = (props) => {
-  const nodeRef = useRef(null)
+  const [{ inventory, locationAadress, user }, dispatch] = useStateValue();
+
+  const nodeRef = useRef(null);
 
   const [newItem, setNewItem] = useState({
     name: "",
+    location: "",
+    location_category: 0,
     serial: 0,
     quantity: 0,
     description: "",
@@ -13,24 +18,50 @@ const AddItemModal = (props) => {
   const handleChange = (e) => {
     setNewItem({
       ...newItem,
+      location: locationAadress.name,
+      location_category: locationAadress.id,
       [e.target.name]: e.target.value,
     });
-    console.log(newItem)
+    console.log(newItem);
   };
 
   const handleSubmit = (event) => {
+    console.log(newItem);
     event.preventDefault();
-    alert("You have submitted the form.");
+    fetch("http://localhost:7000/items/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(newItem),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Showing response message coming from server
+        console.warn(responseJson);
+      })
+      .catch((error) => {
+        //display error message
+        console.warn(error);
+      });
   };
 
   return (
-    <Modal {...props} ref={nodeRef} size="md" aria-labelledby="Create new Item" centered>
+    <Modal
+      {...props}
+      ref={nodeRef}
+      size="md"
+      aria-labelledby="Create new Item"
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title id="Create new Item">Create new Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <InputGroup className="mb-3">
-          <InputGroup.Prepend >
+          <InputGroup.Prepend>
             <InputGroup.Text id="inputGroup-sizing-sm">Name</InputGroup.Text>
           </InputGroup.Prepend>
           <FormControl
@@ -69,8 +100,7 @@ const AddItemModal = (props) => {
             aria-describedby="inputGroup-sizing-sm"
           />
         </InputGroup>
-        <InputGroup
-        >
+        <InputGroup>
           <InputGroup.Prepend>
             <InputGroup.Text id="inputGroup-sizing-sm">
               description
@@ -86,7 +116,9 @@ const AddItemModal = (props) => {
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
-          <Button variant="success" onClick={handleSubmit}>Add</Button>
+        <Button variant="success" onClick={handleSubmit}>
+          Add
+        </Button>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>

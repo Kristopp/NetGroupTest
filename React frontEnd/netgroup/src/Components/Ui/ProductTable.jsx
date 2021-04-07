@@ -7,11 +7,17 @@ import { useStateValue } from "../../state/StateProvider";
 import AddItemModal from "./AddItemModal";
 
 function ProductTable() {
-  const [{ inventory, user }, dispatch] = useStateValue();
+  const [{ inventory }, dispatch] = useStateValue();
   const [modalShow, setModalShow] = useState(false);
-  const nodeRef = useRef(modalShow)
+  const nodeRef = useRef(modalShow);
 
-  console.log(modalShow);
+  const openModal = (location) => {
+    dispatch({
+      type: "GET_INVENTORY_LOCATION",
+      item: location,
+    });
+    setModalShow(true);
+  };
 
   const renderTableData = inventory.map((item) => {
     return item.map((e) => {
@@ -23,7 +29,11 @@ function ProductTable() {
           <td className="col-3">{e.createdBy}</td>
           <td className="col-4">
             phone
-            <Button variant="success"  onClick={() => setModalShow(true)}>
+            <Button
+              variant="success"
+              onClick={() => 
+                openModal(e)}
+            >
               add new item
             </Button>{" "}
           </td>
@@ -47,7 +57,7 @@ function ProductTable() {
         </thead>
         <tbody>{renderTableData}</tbody>
       </Table>
-      <AddItemModal show={modalShow} onHide={() => setModalShow(false)}/>
+      <AddItemModal show={modalShow} onHide={() => setModalShow(false)} />
     </Container>
   );
 }
