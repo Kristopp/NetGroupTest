@@ -14,7 +14,9 @@ const AddItemModal = (props) => {
     quantity: 0,
     description: "",
   });
-
+  const triggerToggle = () => {
+  props.onHide();
+}
   const handleChange = (e) => {
     setNewItem({
       ...newItem,
@@ -28,7 +30,7 @@ const AddItemModal = (props) => {
   const handleSubmit = (event) => {
     console.log(newItem);
     event.preventDefault();
-    fetch("http://localhost:7000/items/", {
+    fetch("http://localhost:7000/items/add", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -37,9 +39,10 @@ const AddItemModal = (props) => {
 
       body: JSON.stringify(newItem),
     })
-      .then((response) => response.json())
+      .then((response) => response.json() )
       .then((responseJson) => {
         //Showing response message coming from server
+        triggerToggle();
         console.warn(responseJson);
       })
       .catch((error) => {

@@ -1,3 +1,5 @@
+//Here is global data that gets passed around comopnents
+
 export const initalState = {
   inventory: [],
   user: null,
@@ -11,8 +13,6 @@ export const initalState = {
     description: "",
   },
 };
-
-//Selector
 
 const reducer = (state, action) => {
   switch (action.type) {
