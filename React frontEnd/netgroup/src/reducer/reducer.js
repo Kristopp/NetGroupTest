@@ -21,12 +21,19 @@ const reducer = (state, action) => {
         ...state,
         inventory: [...state.inventory, action.item],
       };
-      case "GET_INVENTORY_LOCATION":
-        console.log(action.item)
-        return {
-          ...state,
-          locationAadress: action.item
-        };
+    case "GET_INVENTORY_LOCATION":
+      return {
+        ...state,
+        locationAadress: action.item,
+      };
+    case "DELETE_LOCATION":
+      console.log(action.item);
+      let newArray = state.inventory[0].filter((x, i) => i !== action.item);
+      console.log(newArray)
+      return {
+        ...state,
+        inventory: [newArray],
+      };
     case "CREATE_NEW_ITEM":
       console.log(action.item);
       return {

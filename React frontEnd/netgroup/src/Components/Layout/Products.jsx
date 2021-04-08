@@ -19,7 +19,6 @@ const Products = () => {
   return (
     <div>
       <ProductTable />
-      hello
     </div>
   );
 };

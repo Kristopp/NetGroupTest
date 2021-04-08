@@ -12,7 +12,7 @@ const buttonStyle = css`
   align-self: center;
 `;
 
-function ProductTable() {
+function ProductTable({}) {
   const [{ inventory }, dispatch] = useStateValue();
   const [modalShow, setModalShow] = useState(false);
   const nodeRef = useRef(modalShow);
@@ -25,8 +25,35 @@ function ProductTable() {
     setModalShow(true);
   };
 
+  const handleDelete = (e, index) => {
+    console.log(e.id);
+    fetch(`http://localhost:7000/inventory//delete/${e.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+
+      body: JSON.stringify(e),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Showing response message coming from server
+        console.warn(responseJson);
+      })
+      .catch((error) => {
+        //display error message
+        console.warn(error);
+      });
+    dispatch({
+      type: "DELETE_LOCATION",
+      item: index,
+    });
+  };
+
   const renderTableData = inventory.map((item) => {
-    return item.map((e) => {
+    return item.map((e, index) => {
       return (
         <tr key={e.id} className="d-flex">
           <td className="col-1">{e.id}</td>
@@ -50,7 +77,7 @@ function ProductTable() {
               css={buttonStyle}
               variant="light"
               size="sm"
-              onClick={() => openModal(e)}
+              onClick={() => handleDelete(e, index)}
             >
               x
             </Button>
@@ -68,7 +95,7 @@ function ProductTable() {
           <tr className="d-flex">
             <th className="col-1">ID</th>
             <th className="col-2">Location Name</th>
-            <th className="col-1">category</th>
+            <th className="col-1">ParentID</th>
             <th className="col-3">Created by</th>
             <th className="col-3">item</th>
             <th className="col-2">add/delete</th>

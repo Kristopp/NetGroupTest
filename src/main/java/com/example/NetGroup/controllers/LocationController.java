@@ -58,6 +58,6 @@ public class LocationController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteLocation(@PathVariable("id") Long id) {
         inventoryService.deleteLocation(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("location deleted",HttpStatus.OK);
     }
 }
