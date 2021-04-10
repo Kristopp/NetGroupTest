@@ -8,11 +8,12 @@ import Button from "react-bootstrap/Button";
 
 const NewLocation = () => {
   const [{ inventory }, dispatch] = useStateValue();
+  const [dropDownvalue, SetDropDownValue] = useState(0);
   const [newLocation, setNewLocation] = useState({
     id: 0,
     name: "",
     createdBy: "kristo",
-    parrentId: 0,
+    parrentId: dropDownvalue,
   });
 
   const handleChange = (e) => {
@@ -20,21 +21,16 @@ const NewLocation = () => {
       ...newLocation,
       [e.target.name]: e.target.value,
     });
-    console.log(newLocation);
   };
 
   const handleDropDownClick = (e) => {
-    let parrentId = parseInt(e);
-    if (isNaN(parrentId)) {
-      setNewLocation({ ...newLocation, parrentId: 0 });
-    } else {
-      setNewLocation({ ...newLocation, parrentId: parrentId });
-    }
+    parseInt(SetDropDownValue(e)) 
   };
   //Add new Location into database
   const handleSubmit = (event) => {
-    console.log(newLocation);
     event.preventDefault();
+    setNewLocation({ ...newLocation, parrentId: dropDownvalue });
+    console.log(newLocation);
     fetch("http://localhost:7000/inventory/add", {
       method: "POST",
       headers: {
@@ -62,6 +58,7 @@ const NewLocation = () => {
       </InputGroup.Prepend>
       <FormControl
         name="id"
+        type="number"
         onChange={handleChange}
         value={newLocation.id}
         placeholder="location ID"
@@ -69,6 +66,7 @@ const NewLocation = () => {
       />
       <FormControl
         name="name"
+        type="text"
         onChange={handleChange}
         value={newLocation.name}
         placeholder="location name"

@@ -7,13 +7,15 @@ import java.io.Serializable;
 @Entity(name = "inventory")
 public class InventoryLocation implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true )
     long id;
     @Column(name = "name")
     private String name;
+
     @Column(name = "createdBy")
     private String createdBy;
+
+    @Column(name = "parentId", nullable= true)
     private Integer parentId;
 
     public InventoryLocation() {
@@ -67,10 +69,11 @@ public class InventoryLocation implements Serializable {
 
     @Override
     public String toString() {
-        return "new Location{ " + "/" +
+        return "new Location{ " + "n/" +
                 "id= " + id + "/" +
-                "name= " + name + "/" +
-                "createdBy= " + createdBy + "/" +
+                "name= " + name + "n/" +
+                "createdBy= " + createdBy + "n/" +
+                "parrentId= " + parentId + "n/" +
                 "}";
     }
 }

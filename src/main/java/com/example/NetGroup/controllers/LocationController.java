@@ -42,6 +42,8 @@ public class LocationController {
     @PostMapping("/add")
     public ResponseEntity<InventoryLocation> addLocation(@RequestBody InventoryLocation inventoryLocation) {
         InventoryLocation newLocation = inventoryService.createNewLocation(inventoryLocation);
+        System.out.println(newLocation);
+       System.out.println(newLocation.getParentId());
         //return
         return new ResponseEntity<>(newLocation, HttpStatus.CREATED);
     }
