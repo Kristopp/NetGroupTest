@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useStateValue } from "../../state/StateProvider";
 import InputGroup from "react-bootstrap/InputGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import FormControl from "react-bootstrap/FormControl";
@@ -6,6 +7,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Button from "react-bootstrap/Button";
 
 const NewLocation = () => {
+  const [{ inventory }, dispatch] = useStateValue();
   const [newLocation, setNewLocation] = useState({
     id: 0,
     name: "",
@@ -21,6 +23,15 @@ const NewLocation = () => {
     console.log(newLocation);
   };
 
+  const handleDropDownClick = (e) => {
+    let parrentId = parseInt(e);
+    if (isNaN(parrentId)) {
+      setNewLocation({ ...newLocation, parrentId: 0 });
+    } else {
+      setNewLocation({ ...newLocation, parrentId: parrentId });
+    }
+  };
+  //Add new Location into database
   const handleSubmit = (event) => {
     console.log(newLocation);
     event.preventDefault();
@@ -45,26 +56,44 @@ const NewLocation = () => {
   };
   //
   return (
-    <InputGroup>
+    <InputGroup className="mb-3">
+      <InputGroup.Prepend>
+        <InputGroup.Text>ID</InputGroup.Text>
+      </InputGroup.Prepend>
+      <FormControl
+        name="id"
+        onChange={handleChange}
+        value={newLocation.id}
+        placeholder="location ID"
+        aria-label="location ID"
+      />
       <FormControl
         name="name"
         onChange={handleChange}
         value={newLocation.name}
         placeholder="location name"
-        aria-label="Recipient's username"
-        aria-describedby="basic-addon2"
+        aria-label="location name"
       />
       <DropdownButton
         as={InputGroup.Append}
         variant="outline-secondary"
-        title="Category"
-        id="input-group-dropdown-2"
+        title="Add parrent id"
+        onSelect={handleDropDownClick}
       >
-        <Dropdown.Item href="#">Category</Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item href="#">Separated link</Dropdown.Item>
+        <Dropdown.Item href="#">ID: 0</Dropdown.Item>
+        {inventory.map((e) => {
+          return e.map((f) => {
+            return (
+              <Dropdown.Item key={f.id} eventKey={f.id}>
+                ID:{" " + f.id}
+              </Dropdown.Item>
+            );
+          });
+        })}
       </DropdownButton>
-      <Button variant="outline-secondary" onClick={handleSubmit}>Create location</Button>
+      <Button variant="outline-secondary" onClick={handleSubmit}>
+        Create location
+      </Button>
     </InputGroup>
   );
 };

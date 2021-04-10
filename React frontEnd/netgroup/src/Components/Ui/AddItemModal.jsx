@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useStateValue } from "../../state/StateProvider";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
+
 const AddItemModal = (props) => {
   const [{ inventory, locationAadress, user }, dispatch] = useStateValue();
 
@@ -15,8 +16,8 @@ const AddItemModal = (props) => {
     description: "",
   });
   const triggerToggle = () => {
-  props.onHide();
-}
+    props.onHide();
+  };
   const handleChange = (e) => {
     setNewItem({
       ...newItem,
@@ -39,7 +40,7 @@ const AddItemModal = (props) => {
 
       body: JSON.stringify(newItem),
     })
-      .then((response) => response.json() )
+      .then((response) => response.json())
       .then((responseJson) => {
         //Showing response message coming from server
         triggerToggle();
