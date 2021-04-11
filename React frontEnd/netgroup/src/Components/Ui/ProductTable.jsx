@@ -12,12 +12,13 @@ const buttonStyle = css`
   align-self: center;
 `;
 
-function ProductTable({}) {
-  const [{ inventory }, dispatch] = useStateValue();
+function ProductTable() {
+  const [{ inventory, itemList }, dispatch] = useStateValue();
   const [modalShow, setModalShow] = useState(false);
   const nodeRef = useRef(modalShow);
 
   const openModal = (location) => {
+    console.log(location)
     dispatch({
       type: "GET_INVENTORY_LOCATION",
       item: location,
@@ -26,7 +27,6 @@ function ProductTable({}) {
   };
 
   const handleDelete = (e, index) => {
-    console.log(e.id);
     fetch(`http://localhost:7000/inventory//delete/${e.id}`, {
       method: "DELETE",
       headers: {

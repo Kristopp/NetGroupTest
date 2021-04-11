@@ -2,16 +2,10 @@
 
 export const initalState = {
   inventory: [],
+  itemList: [],
   user: null,
   locationAadress: {},
-  newItemState: {
-    name: "",
-    location: "",
-    location_category: 0,
-    serial: 0,
-    quantity: 0,
-    description: "",
-  },
+  items: []
 };
 
 const reducer = (state, action) => {
@@ -22,7 +16,6 @@ const reducer = (state, action) => {
         inventory: [...state.inventory, action.item],
       };
     case "CREATE_NEW_LOCATION":
-      console.log(action.item);
       let newCopy = state.inventory[0].slice().concat(action.item);
       return {
         ...state,
@@ -35,7 +28,6 @@ const reducer = (state, action) => {
         locationAadress: action.item,
       };
     case "DELETE_LOCATION":
-      console.log(action.item);
       let deletedArray = state.inventory[0].filter((x, i) => i !== action.item);
       return {
         ...state,
@@ -46,6 +38,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         newItem: action.user,
+      };
+    case "ADD_ITEM_INTO_INVENTORY":
+      let newIitemListCopy = state.itemList[0].slice().concat(action.item);
+      return {
+        ...state,
+        itemList: [newIitemListCopy],
       };
     default:
       return state;

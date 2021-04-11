@@ -10,7 +10,7 @@ const NewLocation = () => {
   const [{ inventory }, dispatch] = useStateValue();
   const [dropDownvalue, SetDropDownValue] = useState(0);
   const [newLocation, setNewLocation] = useState({
-    randomKey: 0,
+    uniqueKey: 0,
     id: 0,
     name: "",
     createdBy: "kristo",
@@ -81,13 +81,13 @@ const NewLocation = () => {
       <DropdownButton
         as={InputGroup.Append}
         variant="outline-secondary"
-        title="Add parrent id"
+        title={dropDownvalue}
         onSelect={handleDropDownClick}
       >
         {inventory.map((e) => {
           return e.map((f) => {
             return (
-              <Dropdown.Item key={f.randomKey} eventKey={f.id}>
+              <Dropdown.Item key={f.uniqueKey} eventKey={f.id}>
                 ID:{" " + f.id}
               </Dropdown.Item>
             );
