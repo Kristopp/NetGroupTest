@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class InventoryService {
@@ -19,8 +20,10 @@ public class InventoryService {
     public InventoryService(InventoryLocationRepo inventoryLocationRepo) {
         this.inventoryLocationRepo = inventoryLocationRepo;
     }
-
+    //Create new Location
     public InventoryLocation createNewLocation(InventoryLocation inventoryLocation) {
+        UUID uuid = UUID.randomUUID();
+        inventoryLocation.setUniqueKey(uuid);
         return inventoryLocationRepo.save(inventoryLocation);
     };
 

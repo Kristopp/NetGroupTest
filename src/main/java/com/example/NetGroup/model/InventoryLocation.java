@@ -3,30 +3,34 @@ package com.example.NetGroup.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity(name = "inventory")
 public class InventoryLocation implements Serializable {
     @Id
-    @Column(name = "id", unique = true )
-    long id;
+    @Column(name = "id" )
+    Long id;
+    @Column(name = "uniqueKey", unique = true)
+    private UUID uniqueKey;
     @Column(name = "name")
     private String name;
 
     @Column(name = "createdBy")
     private String createdBy;
 
-    @Column(name = "parentId", nullable= true)
+    @Column(name = "parent_id")
     private Integer parentId;
 
     public InventoryLocation() {
     }
 
     public InventoryLocation(
-            long id,
+            Long id,
             String name,
             String createdBy,
             Integer parentId
     ) {
+        this.uniqueKey = uniqueKey;
         this.id = id;
         this.name = name;
         this.createdBy = createdBy;
@@ -40,6 +44,14 @@ public class InventoryLocation implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public UUID getUniqueKey() {
+        return uniqueKey;
+    }
+
+    public void setUniqueKey(UUID uniqueKey) {
+        this.uniqueKey = uniqueKey;
     }
 
     public String getName() {
@@ -73,7 +85,7 @@ public class InventoryLocation implements Serializable {
                 "id= " + id + "/" +
                 "name= " + name + "n/" +
                 "createdBy= " + createdBy + "n/" +
-                "parrentId= " + parentId + "n/" +
+                "parentId= " + parentId + "n/" +
                 "}";
     }
 }

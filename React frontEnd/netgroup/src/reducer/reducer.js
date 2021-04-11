@@ -21,6 +21,14 @@ const reducer = (state, action) => {
         ...state,
         inventory: [...state.inventory, action.item],
       };
+    case "CREATE_NEW_LOCATION":
+      console.log(action.item);
+      let newCopy = state.inventory[0].slice().concat(action.item);
+      return {
+        ...state,
+        inventory: [newCopy],
+      };
+    //Get location by Id
     case "GET_INVENTORY_LOCATION":
       return {
         ...state,
@@ -28,11 +36,10 @@ const reducer = (state, action) => {
       };
     case "DELETE_LOCATION":
       console.log(action.item);
-      let newArray = state.inventory[0].filter((x, i) => i !== action.item);
-      console.log(newArray)
+      let deletedArray = state.inventory[0].filter((x, i) => i !== action.item);
       return {
         ...state,
-        inventory: [newArray],
+        inventory: [deletedArray],
       };
     case "CREATE_NEW_ITEM":
       console.log(action.item);
