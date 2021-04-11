@@ -18,9 +18,14 @@ function ProductTable() {
   const nodeRef = useRef(modalShow);
 
   const openModal = (location) => {
-    console.log(location)
+    console.log(location);
     dispatch({
       type: "GET_INVENTORY_LOCATION",
+      item: location,
+    });
+
+    dispatch({
+      type: "CLICKED_LOCATION_ADDRESS",
       item: location,
     });
     setModalShow(true);
@@ -54,13 +59,14 @@ function ProductTable() {
 
   const renderTableData = inventory.map((item) => {
     return item.map((e, index) => {
+
       return (
         <tr key={e.id} className="d-flex">
           <td className="col-1">{e.id}</td>
           <td className="col-2">{e.name}</td>
           <td className="col-1">{e.parentId}</td>
           <td className="col-3">{e.createdBy}</td>
-          <td className="col-3">{e.item}</td>
+          <td className="col-3">{}</td>
           <td className="col-1 w-50 mx-auto">
             <Button
               className="mx-auto"

@@ -5,12 +5,16 @@ export const initalState = {
   itemList: [],
   user: null,
   locationAadress: {},
-  items: []
+  items: [],
+  //This is for passing clicked loaction object into added item 
+  clickedLocation: {}
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    //creates invenotry list
     case "CREATE_INVENTORY":
+      console.log(action.item)
       return {
         ...state,
         inventory: [...state.inventory, action.item],
@@ -33,17 +37,28 @@ const reducer = (state, action) => {
         ...state,
         inventory: [deletedArray],
       };
-    case "CREATE_NEW_ITEM":
-      console.log(action.item);
+    case "CREATE_ITEM_LIST":
       return {
         ...state,
-        newItem: action.user,
+        itemList: action.item,
       };
-    case "ADD_ITEM_INTO_INVENTORY":
-      let newIitemListCopy = state.itemList[0].slice().concat(action.item);
+    case "CREATE_NEW_ITEM":
       return {
         ...state,
-        itemList: [newIitemListCopy],
+        newItem: action.item,
+      };
+    case "ADD_ITEM_INTO_INVENTORY_LOCATION":
+      console.log(action.item)
+      return {
+        ...state,
+        itemList: [],
+      };
+      //to pass clicked location object around where needed
+      case "CLICKED_LOCATION_ADDRESS":
+        console.log(action.item)
+      return {
+        ...state,
+        locationAadress: action.item,
       };
     default:
       return state;

@@ -7,7 +7,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Button from "react-bootstrap/Button";
 
 const NewLocation = () => {
-  const [{ inventory }, dispatch] = useStateValue();
+  const [{ inventory, itemList }, dispatch] = useStateValue();
   const [dropDownvalue, SetDropDownValue] = useState(0);
   const [newLocation, setNewLocation] = useState({
     uniqueKey: 0,
@@ -15,6 +15,7 @@ const NewLocation = () => {
     name: "",
     createdBy: "kristo",
     parentId: 0,
+    items: [],
   });
 
   const handleChange = (e) => {
@@ -24,6 +25,26 @@ const NewLocation = () => {
     });
   };
 
+  const addItemIntoLocation = (inventory, itemList) => {
+    if (inventory.length === 0) {
+      return (inventory = []);
+    } else {
+     inventory.map((location, locationIndex) => {
+        itemList.map((itemL, itemLIndex) => {
+          location[locationIndex].items = [];
+          if (
+            itemList.location ||
+            itemList.locationCategory === location.name ||
+            location.parentId
+          ) {
+            location[locationIndex].items = [itemList[itemLIndex]];
+          }
+        });
+      });
+    }
+  };
+  console.log(addItemIntoLocation(inventory, itemList));
+
   const handleDropDownClick = (id) => {
     parseInt(SetDropDownValue(id));
   };
@@ -32,7 +53,6 @@ const NewLocation = () => {
     event.preventDefault();
     setNewLocation({ ...newLocation, parentId: dropDownvalue });
     let { id, name, createdBy, parentId } = newLocation;
-    console.log({ id, name, createdBy, parentId });
     fetch("http://localhost:7000/inventory/add", {
       method: "POST",
       headers: {

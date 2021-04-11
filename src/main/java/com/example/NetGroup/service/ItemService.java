@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,11 +26,14 @@ public class ItemService {
     }
 
     public Item createNewItem(Item item) {
-        LocalDateTime createdAt = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.parse("2019-11-15T13:15:30");
+        Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+        Date date = Date.from(instant);
+        item.setWhenStored(date);
         item.setId(UUID.randomUUID().toString());
-        item.setWhenStored(createdAt);
+
         System.out.println(item);
-        System.out.println("new Item created at:" + createdAt);
+        System.out.println("new Item created at:" + date);
 
 
         return itemRepo.save(item);

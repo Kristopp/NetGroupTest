@@ -3,14 +3,14 @@ import { useStateValue } from "../../state/StateProvider";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 
 const AddItemModal = (props) => {
-  const [{ inventory, locationAadress }, dispatch] = useStateValue();
+  const [{ locationAadress }, dispatch] = useStateValue();
 
   const nodeRef = useRef(null);
 
   const [newItem, setNewItem] = useState({
     name: "",
-    location: {},
-    location_category: 0,
+    location: "",
+    locationCategory: 0,
     serial: 0,
     quantity: 0,
     description: "",
@@ -19,15 +19,15 @@ const AddItemModal = (props) => {
     props.onHide();
   };
   const handleChange = (e) => {
-    console.log(e)
+    
     setNewItem({
       ...newItem,
       location: locationAadress.name,
-      location_category: locationAadress.id,
+      locationCategory: locationAadress.id,
       [e.target.name]: e.target.value,
     });
-    console.log(newItem);
   };
+
 
   const handleSubmit = (event) => {
     console.log(newItem);
@@ -44,10 +44,8 @@ const AddItemModal = (props) => {
       .then((response) => response.json())
       .then((responseJson) => {
         //Showing response message coming from server
-        dispatch({ 
-          type: "ADD_ITEM_INTO_INVENTORY",
-          item: newItem
-        })
+
+        setNewItem({})
         triggerToggle();
         console.warn(responseJson);
       })

@@ -3,7 +3,7 @@ package com.example.NetGroup.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -20,7 +20,7 @@ public class Item implements Serializable {
     @Column(name = "serial")
     Long serial;
     @Column(name = "when_stored")
-    LocalDateTime whenStored;
+    Date whenStored;
     @Column(name = "location")
     String location;
     @Column(name = "locationCategory")
@@ -88,11 +88,11 @@ public class Item implements Serializable {
         this.serial = serial;
     }
 
-    public void setWhenStored(LocalDateTime createdAt) {
+    public void setWhenStored(Date whenStored) {
         this.whenStored = whenStored;
     }
 
-    public LocalDateTime getWhenStored() {
+    public Date getWhenStored() {
         return whenStored;
     }
 

@@ -14,6 +14,14 @@ const Products = () => {
           item: data,
         })
       );
+      fetch("http://localhost:7000/items/all")
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({
+          type: "CREATE_ITEM_LIST",
+          item: data,
+        })
+      );
   }, []);
 
   return (

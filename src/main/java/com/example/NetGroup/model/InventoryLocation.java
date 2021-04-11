@@ -21,6 +21,7 @@ public class InventoryLocation implements Serializable {
     @Column(name = "parent_id")
     private Integer parentId;
 
+
     public InventoryLocation() {
     }
 
